@@ -34,22 +34,22 @@ class OneLayerPerceptron:
         n_samples, n_features = X.shape
         self.weights = np.zeros(n_features)  # Инициализация весов нулями
         self.bias = 0  # Инициализация смещения нулем
-        #Обучение по схеме положительного и отрицательного подкрепления (онлайн-обновление)
+        #!!!Обучение по схеме положительного и отрицательного подкрепления (онлайн-обновление)
         #Если пример классифицирован неверно, веса обновляются:
         #Тогда, если вход был неактивен, т.е. xi = 0, то i-й синаптический вес не
 #изменится. Если же вход был активен, т.е. xi = 1, то i-й синаптический вес будет
 #увеличен на 1
-        for _ in range(self.n_iterations):
-            for idx in range(n_samples):
-                linear_output = np.dot(X[idx], self.weights) + self.bias
-                activation = self.activation_function(linear_output)
-                predicted = 1 if activation > 0.5 else 0
+        for _ in range(self.n_iterations): #Проходим циклом через данные несколько раз 
+            for idx in range(n_samples): #Обрабатываем каждый пример по очереди
+                linear_output = np.dot(X[idx], self.weights) + self.bias # Вычисляем взвешенную сумму
+                activation = self.activation_function(linear_output) # Применяем функцию активации
+                predicted = 1 if activation > 0.5 else 0 # Преобразуем вероятность в класс (0 или 1)
                 # Расчет ошибки
-                error = y[idx] - predicted
-                if error != 0:
-                    # Обновление весов и смещения в зависимости от ошибки
-                    self.weights += self.learning_rate * error * X[idx]
-                    self.bias += self.learning_rate * error
+                error = y[idx] - predicted # Сравниваем предсказание с реальным значением
+                if error != 0: # Если модель ошиблась
+            # Обновляем веса и смещение
+                    self.weights += self.learning_rate * error * X[idx] # Корректируем веса
+                    self.bias += self.learning_rate * error # Корректируем смещение
     def binary_predict(self, X):
         #Преобразует вероятности в классы (0 или 1)
         #Если вероятность больше 0.5, то это класс 1 (доброкач.), иначе — класс 0 (злокач.)
