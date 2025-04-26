@@ -38,7 +38,7 @@ class OneLayerPerceptron:
         for _ in range(self.n_iterations):
             #Вычисление предсказаний модели
             model_output = self.predict(X)
-            #Вычисление ошибки (градиентов)
+            #Вычисление ошибки (градиентов) для обновления весов
             dw = (1 / n_samples) * np.dot(X.T, (model_output - y))  #градиент по весам
             db = (1 / n_samples) * np.sum(model_output - y)  #градиент по смещению
             #Обновление весов и смещения
